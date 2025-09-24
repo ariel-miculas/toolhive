@@ -78,6 +78,7 @@ func WithRemoteAuth(config *RemoteAuthConfig) RunConfigBuilderOption {
 	return func(b *runConfigBuilder) error {
 		if config == nil {
 			config = &RemoteAuthConfig{
+				CallbackHost: DefaultCallbackHost,
 				CallbackPort: DefaultCallbackPort,
 			}
 		}

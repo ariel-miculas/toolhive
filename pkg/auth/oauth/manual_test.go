@@ -18,6 +18,7 @@ func TestCreateOAuthConfigManual(t *testing.T) {
 		tokenURL     string
 		scopes       []string
 		usePKCE      bool
+		callbackHost string
 		callbackPort int
 		expectError  bool
 		errorMsg     string
@@ -31,6 +32,7 @@ func TestCreateOAuthConfigManual(t *testing.T) {
 			tokenURL:     "https://example.com/oauth/token",
 			scopes:       []string{"read", "write"},
 			usePKCE:      true,
+			callbackHost: "http://localhost",
 			callbackPort: 8080,
 			expectError:  false,
 			validate: func(t *testing.T, config *Config) {
@@ -52,6 +54,7 @@ func TestCreateOAuthConfigManual(t *testing.T) {
 			tokenURL:     "https://example.com/oauth/token",
 			scopes:       []string{"read"},
 			usePKCE:      true,
+			callbackHost: "http://localhost",
 			callbackPort: 0,
 			expectError:  false,
 			validate: func(t *testing.T, config *Config) {
@@ -260,6 +263,7 @@ func TestCreateOAuthConfigManual(t *testing.T) {
 				tt.tokenURL,
 				tt.scopes,
 				tt.usePKCE,
+				tt.callbackHost,
 				tt.callbackPort,
 				oauthParams,
 			)
@@ -325,6 +329,7 @@ func TestCreateOAuthConfigManual_ScopeDefaultBehavior(t *testing.T) {
 				"https://example.com/oauth/token",
 				tt.scopes,
 				true,
+				"http://localhost",
 				8080,
 				nil, // No OAuth params for basic tests
 			)
@@ -367,6 +372,7 @@ func TestCreateOAuthConfigManual_PKCEBehavior(t *testing.T) {
 				"https://example.com/oauth/token",
 				[]string{"read"},
 				tt.usePKCE,
+				"http://localhost",
 				8080,
 				nil, // No OAuth params for basic tests
 			)
@@ -414,6 +420,7 @@ func TestCreateOAuthConfigManual_CallbackPortBehavior(t *testing.T) {
 				"https://example.com/oauth/token",
 				[]string{"read"},
 				true,
+				"http://localhost",
 				tt.port,
 				nil, // No OAuth params for basic tests
 			)
@@ -478,6 +485,7 @@ func TestCreateOAuthConfigManual_OAuthParamsBehavior(t *testing.T) {
 				"https://example.com/oauth/token",
 				[]string{"read"},
 				true,
+				"http://localhost",
 				8080,
 				tt.oauthParams,
 			)

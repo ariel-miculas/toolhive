@@ -158,12 +158,14 @@ func TestNewDynamicClientRegistrationRequest(t *testing.T) {
 	tests := []struct {
 		name         string
 		scopes       []string
+		callbackHost string
 		callbackPort int
 		expected     *DynamicClientRegistrationRequest
 	}{
 		{
 			name:         "basic request",
 			scopes:       []string{"openid", "profile"},
+			callbackHost: "http://localhost",
 			callbackPort: 8080,
 			expected: &DynamicClientRegistrationRequest{
 				ClientName:              "ToolHive MCP Client",
@@ -177,6 +179,7 @@ func TestNewDynamicClientRegistrationRequest(t *testing.T) {
 		{
 			name:         "empty scopes",
 			scopes:       []string{},
+			callbackHost: "http://localhost",
 			callbackPort: 8666,
 			expected: &DynamicClientRegistrationRequest{
 				ClientName:              "ToolHive MCP Client",
@@ -192,7 +195,7 @@ func TestNewDynamicClientRegistrationRequest(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			result := NewDynamicClientRegistrationRequest(tt.scopes, tt.callbackPort)
+			result := NewDynamicClientRegistrationRequest(tt.scopes, tt.callbackHost, tt.callbackPort)
 
 			assert.Equal(t, tt.expected.ClientName, result.ClientName)
 			assert.Equal(t, tt.expected.RedirectURIs, result.RedirectURIs)

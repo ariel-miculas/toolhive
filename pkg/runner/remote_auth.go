@@ -54,6 +54,7 @@ func (h *RemoteAuthHandler) Authenticate(ctx context.Context, remoteURL string) 
 				AuthorizeURL: h.config.AuthorizeURL,
 				TokenURL:     h.config.TokenURL,
 				Scopes:       scopes,
+				CallbackHost: h.config.CallbackHost,
 				CallbackPort: h.config.CallbackPort,
 				Timeout:      h.config.Timeout,
 				SkipBrowser:  h.config.SkipBrowser,

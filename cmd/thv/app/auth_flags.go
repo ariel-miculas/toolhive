@@ -17,6 +17,7 @@ type RemoteAuthFlags struct {
 	RemoteAuthScopes           []string
 	RemoteAuthSkipBrowser      bool
 	RemoteAuthTimeout          time.Duration
+	RemoteAuthCallbackHost     string
 	RemoteAuthCallbackPort     int
 	RemoteAuthIssuer           string
 	RemoteAuthAuthorizeURL     string
@@ -41,6 +42,8 @@ func AddRemoteAuthFlags(cmd *cobra.Command, config *RemoteAuthFlags) {
 		"Skip opening browser for remote server OAuth flow")
 	cmd.Flags().DurationVar(&config.RemoteAuthTimeout, "remote-auth-timeout", 30*time.Second,
 		"Timeout for OAuth authentication flow (e.g., 30s, 1m, 2m30s)")
+	cmd.Flags().StringVar(&config.RemoteAuthCallbackHost, "remote-auth-callback-host", runner.DefaultCallbackHost,
+		"Port for OAuth callback server during remote authentication")
 	cmd.Flags().IntVar(&config.RemoteAuthCallbackPort, "remote-auth-callback-port", runner.DefaultCallbackPort,
 		"Port for OAuth callback server during remote authentication")
 	cmd.Flags().StringVar(&config.RemoteAuthAuthorizeURL, "remote-auth-authorize-url", "",

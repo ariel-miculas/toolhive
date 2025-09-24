@@ -159,6 +159,7 @@ func TestRunConfigToCreateRequest(t *testing.T) {
 				ClientID:     "test-client",
 				Scopes:       []string{"read", "write"},
 				OAuthParams:  map[string]string{"custom": "param"},
+				CallbackHost: "localhost",
 				CallbackPort: 8081,
 			},
 		}

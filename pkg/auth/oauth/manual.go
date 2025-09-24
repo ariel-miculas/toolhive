@@ -13,6 +13,7 @@ func CreateOAuthConfigManual(
 	authURL, tokenURL string,
 	scopes []string,
 	usePKCE bool,
+	callbackHost string,
 	callbackPort int,
 	oauthParams map[string]string,
 ) (*Config, error) {
@@ -46,6 +47,7 @@ func CreateOAuthConfigManual(
 		TokenURL:     tokenURL,
 		Scopes:       scopes,
 		UsePKCE:      usePKCE,
+		CallbackHost: callbackHost,
 		CallbackPort: callbackPort,
 		OAuthParams:  oauthParams,
 	}, nil

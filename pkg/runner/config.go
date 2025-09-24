@@ -441,6 +441,7 @@ type RemoteAuthConfig struct {
 	Scopes           []string
 	SkipBrowser      bool
 	Timeout          time.Duration `swaggertype:"string" example:"5m"`
+	CallbackHost     string
 	CallbackPort     int
 
 	// OAuth endpoint configuration (from registry)
@@ -467,6 +468,9 @@ type ToolOverride struct {
 	// Description is the redefined description of the tool
 	Description string `json:"description,omitempty"`
 }
+
+// DefaultCallbackHost is the default host for the OAuth callback server
+const DefaultCallbackHost = ""
 
 // DefaultCallbackPort is the default port for the OAuth callback server
 const DefaultCallbackPort = 8666

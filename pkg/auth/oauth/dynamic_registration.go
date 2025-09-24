@@ -41,7 +41,7 @@ type DynamicClientRegistrationRequest struct {
 }
 
 // NewDynamicClientRegistrationRequest creates a new dynamic client registration request
-func NewDynamicClientRegistrationRequest(scopes []string, callbackPort int) *DynamicClientRegistrationRequest {
+func NewDynamicClientRegistrationRequest(scopes []string, callbackHost string, callbackPort int) *DynamicClientRegistrationRequest {
 
 	redirectURIs := []string{fmt.Sprintf("http://localhost:%d/callback", callbackPort)}
 

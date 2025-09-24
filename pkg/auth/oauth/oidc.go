@@ -191,9 +191,10 @@ func CreateOAuthConfigFromOIDC(
 	issuer, clientID, clientSecret string,
 	scopes []string,
 	usePKCE bool,
+	callbackHost string,
 	callbackPort int,
 ) (*Config, error) {
-	return createOAuthConfigFromOIDCWithClient(ctx, issuer, clientID, clientSecret, scopes, usePKCE, callbackPort, nil)
+	return createOAuthConfigFromOIDCWithClient(ctx, issuer, clientID, clientSecret, scopes, usePKCE, callbackHost, callbackPort, nil)
 }
 
 // createOAuthConfigFromOIDCWithClient creates an OAuth config from OIDC discovery with a custom HTTP client (private for testing)
@@ -202,6 +203,7 @@ func createOAuthConfigFromOIDCWithClient(
 	issuer, clientID, clientSecret string,
 	scopes []string,
 	usePKCE bool,
+	callbackHost string,
 	callbackPort int,
 	client httpClient,
 ) (*Config, error) {
@@ -234,6 +236,7 @@ func createOAuthConfigFromOIDCWithClient(
 		TokenURL:              doc.TokenEndpoint,
 		Scopes:                scopes,
 		UsePKCE:               usePKCE,
+		CallbackHost:          callbackHost,
 		CallbackPort:          callbackPort,
 	}, nil
 }

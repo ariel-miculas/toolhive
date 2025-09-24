@@ -352,6 +352,7 @@ type OAuthFlowConfig struct {
 	TokenURL             string // Manual OAuth endpoint (optional)
 	RegistrationEndpoint string // Manual registration endpoint (optional)
 	Scopes               []string
+	CallbackHost         string
 	CallbackPort         int
 	Timeout              time.Duration
 	SkipBrowser          bool
@@ -448,6 +449,7 @@ func createOAuthConfig(ctx context.Context, issuer string, config *OAuthFlowConf
 			config.TokenURL,
 			config.Scopes,
 			true, // Enable PKCE by default for security
+			config.CallbackHost,
 			config.CallbackPort,
 			config.OAuthParams,
 		)
@@ -462,6 +464,7 @@ func createOAuthConfig(ctx context.Context, issuer string, config *OAuthFlowConf
 		config.ClientSecret,
 		config.Scopes,
 		true, // Enable PKCE by default for security
+		config.CallbackHost,
 		config.CallbackPort,
 	)
 }
@@ -516,7 +519,7 @@ func registerDynamicClient(
 ) (*oauth.DynamicClientRegistrationResponse, error) {
 
 	// Use default client name if not provided
-	registrationRequest := oauth.NewDynamicClientRegistrationRequest(config.Scopes, config.CallbackPort)
+	registrationRequest := oauth.NewDynamicClientRegistrationRequest(config.Scopes, config.CallbackHost, config.CallbackPort)
 
 	// Perform dynamic client registration
 	registrationResponse, err := oauth.RegisterClientDynamically(ctx, discoveredDoc.RegistrationEndpoint, registrationRequest)

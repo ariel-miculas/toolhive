@@ -163,7 +163,8 @@ type OAuthConfig struct {
 	UsePKCE bool `json:"use_pkce,omitempty" yaml:"use_pkce,omitempty"`
 	// OAuthParams contains additional OAuth parameters to include in the authorization request
 	// These are server-specific parameters like "prompt", "response_mode", etc.
-	OAuthParams map[string]string `json:"oauth_params,omitempty" yaml:"oauth_params,omitempty"`
+	OAuthParams  map[string]string `json:"oauth_params,omitempty" yaml:"oauth_params,omitempty"`
+	CallbackHost string            `json:"callback_host,omitempty" yaml:"callback_host,omitempty"`
 	// CallbackPort is the specific port to use for the OAuth callback server
 	// If not specified, a random available port will be used
 	CallbackPort int `json:"callback_port,omitempty" yaml:"callback_port,omitempty"`

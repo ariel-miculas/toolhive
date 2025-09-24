@@ -46,6 +46,9 @@ type Config struct {
 	// UsePKCE enables PKCE (Proof Key for Code Exchange) for enhanced security
 	UsePKCE bool
 
+	// CallbackHost is the host for the OAuth callback server
+	CallbackHost string
+
 	// CallbackPort is the port for the OAuth callback server (optional, 0 means auto-select)
 	CallbackPort int
 
@@ -61,6 +64,7 @@ type Flow struct {
 	config       *Config
 	oauth2Config *oauth2.Config
 	server       *http.Server
+	host         string
 	port         int
 
 	// PKCE parameters
@@ -126,6 +130,7 @@ func NewFlow(config *Config) (*Flow, error) {
 	flow := &Flow{
 		config:       config,
 		oauth2Config: oauth2Config,
+		host:         config.CallbackHost,
 		port:         port,
 	}
 
@@ -182,14 +187,14 @@ func (f *Flow) Start(ctx context.Context, skipBrowser bool) (*TokenResult, error
 	mux.HandleFunc("/", f.handleRoot())
 
 	f.server = &http.Server{
-		Addr:              fmt.Sprintf(":%d", f.port),
+		Addr:              fmt.Sprintf("%s:%d", f.host, f.port),
 		Handler:           mux,
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 
 	// Start the server in a goroutine
 	go func() {
-		logger.Infof("Starting OAuth callback server on port %d", f.port)
+		logger.Infof("Starting OAuth callback server on %s:port %d", f.host, f.port)
 		if err := f.server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			errorChan <- fmt.Errorf("failed to start callback server: %w", err)
 		}

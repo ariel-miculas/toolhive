@@ -104,6 +104,8 @@ type remoteOAuthConfig struct {
 	UsePKCE bool `json:"use_pkce,omitempty"`
 	// Additional OAuth parameters for server-specific customization
 	OAuthParams map[string]string `json:"oauth_params,omitempty"`
+	// Specific host for OAuth callback server
+	CallbackHost string `json:"callback_host,omitempty"`
 	// Specific port for OAuth callback server
 	CallbackPort int `json:"callback_port,omitempty"`
 	// Whether to skip opening browser for OAuth flow (defaults to false)
@@ -206,6 +208,7 @@ func runConfigToCreateRequest(runConfig *runner.RunConfig) *createRequest {
 			ClientID:     runConfig.RemoteAuthConfig.ClientID,
 			Scopes:       runConfig.RemoteAuthConfig.Scopes,
 			OAuthParams:  runConfig.RemoteAuthConfig.OAuthParams,
+			CallbackHost: runConfig.RemoteAuthConfig.CallbackHost,
 			CallbackPort: runConfig.RemoteAuthConfig.CallbackPort,
 			SkipBrowser:  runConfig.RemoteAuthConfig.SkipBrowser,
 		}
